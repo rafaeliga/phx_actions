@@ -11,7 +11,7 @@ jobs:
     name: Build and test
 
     env:
-      MIX_ENV: ci
+      MIX_ENV: test
       DATABASE_URL: postgres://postgres:postgres@localhost:5432/postgres
     
     runs-on: ubuntu-latest
