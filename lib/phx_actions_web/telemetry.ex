@@ -1,8 +1,4 @@
 defmodule PhxActionsWeb.Telemetry do
-  @moduledoc """
-  Web Telemetry
-  """
-
   use Supervisor
   import Telemetry.Metrics
 
