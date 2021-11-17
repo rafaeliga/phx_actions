@@ -16,6 +16,8 @@ defmodule PhxActions.DataCase do
 
   use ExUnit.CaseTemplate
 
+  alias Ecto.Adapters.SQL.Sandbox
+
   using do
     quote do
       alias PhxActions.Repo
@@ -28,10 +30,10 @@ defmodule PhxActions.DataCase do
   end
 
   setup tags do
-    :ok = Ecto.Adapters.SQL.Sandbox.checkout(PhxActions.Repo)
+    :ok = Sandbox.checkout(PhxActions.Repo)
 
     unless tags[:async] do
-      Ecto.Adapters.SQL.Sandbox.mode(PhxActions.Repo, {:shared, self()})
+      Sandbox.mode(PhxActions.Repo, {:shared, self()})
     end
 
     :ok
