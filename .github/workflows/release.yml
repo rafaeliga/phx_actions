@@ -6,6 +6,8 @@ on:
 
 env:
   MIX_ENV: hom
+  REGISTRY: ghcr.io
+  IMAGE_NAME: ${{ github.repository }}
 
 jobs:
   build-phoenix:
