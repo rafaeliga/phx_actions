@@ -32,4 +32,4 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: compiled
-          path: _build/hom/rel/tradesquash
+          path: _build/hom/rel/phx_actions
