@@ -8,7 +8,7 @@ ENV PORT=5000
 ENV MIX_ENV=$ENVIRONMENT
 
 COPY priv/setup/docker/run.sh .
-COPY _build/$ENVIRONMENT/rel/tradesquash /opt/app/tradesquash
+COPY _build/$ENVIRONMENT/rel/phx_actions /opt/app/phx_actions
 
 RUN chown -R default: /opt/app
 
