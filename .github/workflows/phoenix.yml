@@ -2,13 +2,13 @@ name: Phoenix CI
 
 on: [push, pull_request]
 
+env:
+  MIX_ENV: test
+  DATABASE_URL: postgres://postgres:postgres@localhost:5432/postgres
+
 jobs:
   elixir:
     runs-on: ubuntu-latest
-
-    env:
-      MIX_ENV: test
-      DATABASE_URL: postgres://postgres:postgres@localhost:5432/postgres
 
     services:
       db:
