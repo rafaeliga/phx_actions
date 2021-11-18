@@ -1,0 +1,24 @@
+name: AWS
+
+on:
+  push:
+    branches: [master]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout source code
+        uses: actions/checkout@v2
+
+      - name: Deploy to EB
+        uses: ghcr.io/rafaeliga/phx_actions:master
+        run: |
+          envsubst < priv/setup/aws/Dockerrun.aws.json > ./Dockerrun.aws.json
+          envsubst < priv/setup/aws/aws.env > ~/.aws/credentials
+          eb use tsq-vnext-$CI_ENVIRONMENT_NAME
+          envsubst < priv/setup/aws/eb.env > .ebextensions/options.config
+          git add ./Dockerrun.aws.json .ebextensions/options.config
+          eb status
+          eb deploy --staged
+          eb printenv
