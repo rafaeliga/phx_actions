@@ -1,0 +1,35 @@
+name: Release
+
+on:
+  push:
+    branches: [master]
+
+env:
+  MIX_ENV: hom
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Elixir
+        uses: erlef/setup-beam@988e02bfe678367a02564f65ca2e37726dc0268f
+        with:
+          elixir-version: "1.12.2"
+          otp-version: "23.3"
+      - name: build
+        run: |
+          mix deps.get --only prod
+          mix compile
+          npm install --prefix assets
+      - name: release
+        run: |
+          npm run deploy --prefix assets
+          mix phx.digest
+          mix release
+      - name: artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: compiled
+          path: _build/hom/rel/tradesquash
