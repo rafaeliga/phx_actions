@@ -12,7 +12,6 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Deploy to EB
-        uses: ghcr.io/rafaeliga/phx_actions:master
         run: |
           envsubst < priv/setup/aws/Dockerrun.aws.json > ./Dockerrun.aws.json
           envsubst < priv/setup/aws/aws.env > ~/.aws/credentials
