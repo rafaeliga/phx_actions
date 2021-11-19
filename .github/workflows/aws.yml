@@ -7,14 +7,14 @@ on:
 jobs:
   deploy_aws:
     runs-on: ubuntu-latest
+    environment: hom
     steps:
       - uses: actions/checkout@v2
       - name: Set up Python 3.6 (needed for eb cli)
         uses: actions/setup-python@v1
         with:
           python-version: "3.6"
-      - name: Checks
-        run: |
+      - run: |
           echo ${{secrets.AWS_ACCESS_KEY_ID}}
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
