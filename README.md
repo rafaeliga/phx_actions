@@ -18,3 +18,7 @@ Ready to run in production? Please [check our deployment guides](https://hexdocs
   * Docs: https://hexdocs.pm/phoenix
   * Forum: https://elixirforum.com/c/phoenix-forum
   * Source: https://github.com/phoenixframework/phoenix
+
+# local docker
+
+USE_SSL=false RDS_HOSTNAME=localhost RDS_PASSWORD=postgres RDS_USERNAME=postgres RDS_DB_NAME=phx_actions_dev ENDPOINT_HOST=localhost SECRET_KEY_BASE=itLJ8lMKQjAcnIOkWBsfPa3q5CtjeEV2tjC4C1tjrt4OKtGffehKMqpy8J0NcBfx  _build/hom/rel/phx_actions/bin/phx_actions start

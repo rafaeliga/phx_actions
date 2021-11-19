@@ -2,9 +2,9 @@ FROM bitwalker/alpine-elixir:1.12.2
 
 ARG ENVIRONMENT
 
-EXPOSE 5000
+EXPOSE 5555
 
-ENV PORT=5000
+ENV PORT=5555
 ENV MIX_ENV=$ENVIRONMENT
 
 COPY priv/setup/docker/run.sh .
