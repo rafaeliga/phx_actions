@@ -28,7 +28,6 @@ jobs:
       - name: Prepare deploy
         run: |
           envsubst < priv/setup/aws/Dockerrun.aws.json > ./Dockerrun.aws.json
-          cp -r .elasticbeanstalk ~/
 
           eb use Phxactions-env
 
