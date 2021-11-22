@@ -14,9 +14,9 @@ import "../css/app.css"
 //
 import "phoenix_html"
 
-function isTruthy(x) {
-  debugger;
-  return Boolean(x);
-}
-
-isTruthy('true')
+const x = 9007199254740993
+const x = 5123000000000000000000000000001
+const x = 1230000000000000000000000.0
+const x = .1230000000000000000000000
+const x = 0X20000000000001
+const x = 0X2_000000000_0001;
