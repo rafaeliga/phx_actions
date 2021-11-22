@@ -1,0 +1,34 @@
+version: "2"
+plugins:
+  credo:
+    enabled: true
+  eslint:
+    enabled: true
+  stylelint:
+    enabled: true
+  duplication:
+    enabled: true
+    exclude_patterns:
+      - "_build/"
+      - "assets/node_modules/"
+      - "assets/static/"
+      - "assets/test/"
+      - "config/"
+      - "deps/"
+      - "priv/"
+      - "test/"
+
+checks:
+  file-lines:
+    enabled: false
+  method-lines:
+    enabled: false
+
+exclude_patterns:
+  - "_build/"
+  - "assets/js/components/" # Disabled checks on our js components until we refactor them
+  - "assets/node_modules/"
+  - "assets/static/"
+  - "config/"
+  - "deps/"
+  - "priv/"
