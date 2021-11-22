@@ -22,6 +22,6 @@ function test321() {
   console.log("test")
 }
 
-test123()
-
-test321()
+function test321() {
+  console.log("test")
+}
