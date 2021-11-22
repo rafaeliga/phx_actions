@@ -13,3 +13,10 @@ import "../css/app.css"
 //     import socket from "./socket"
 //
 import "phoenix_html"
+
+function isTruthy(x) {
+  debugger;
+  return Boolean(x);
+}
+
+isTruthy('true')
