@@ -13,3 +13,15 @@ import "../css/app.css"
 //     import socket from "./socket"
 //
 import "phoenix_html"
+
+function test123() {
+  console.log("test")
+}
+
+function test321() {
+  console.log("test")
+}
+
+test123()
+
+test321()
