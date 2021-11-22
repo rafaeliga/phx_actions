@@ -9,8 +9,12 @@
     "test": "jest assets/test --coverage"
   },
   "dependencies": {
+    "glob-parent": "^6.0.2",
+    "nth-check": "^2.0.1",
     "phoenix": "file:../deps/phoenix",
-    "phoenix_html": "file:../deps/phoenix_html"
+    "phoenix_html": "file:../deps/phoenix_html",
+    "tar": "^6.1.11",
+    "trim-newlines": "^4.0.2"
   },
   "devDependencies": {
     "@babel/core": "^7.0.0",
