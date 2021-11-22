@@ -1,4 +1,4 @@
-# PhxActions
+# Phx Actions
 
 To start your Phoenix server:
 
