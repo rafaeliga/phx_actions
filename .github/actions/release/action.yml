@@ -24,4 +24,4 @@ runs:
       uses: actions/upload-artifact@v2
       with:
         name: compiled
-        path: _build/hom/rel/phx_actions
+        path: _build/${{ env.MIX_ENV }}/rel/phx_actions
