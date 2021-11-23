@@ -2,9 +2,6 @@ name: Tag
 
 on: workflow_dispatch
 
-env:
-  MIX_ENV: dev
-
 jobs:
   tag:
     runs-on: ubuntu-latest
