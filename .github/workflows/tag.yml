@@ -1,0 +1,45 @@
+name: Tag
+
+on: workflow_dispatch
+
+env:
+  MIX_ENV: dev
+  # DATABASE_URL: postgres://postgres:postgres@localhost:5432/postgres
+
+jobs:
+  elixir:
+    runs-on: ubuntu-latest
+
+    # services:
+    #   db:
+    #     env:
+    #       POSTGRES_USER: postgres
+    #       POSTGRES_PASSWORD: postgres
+    #       POSTGRES_DB: postgres
+    #     image: postgres:11
+    #     ports: ["5432:5432"]
+    #     options: >-
+    #       --health-cmd pg_isready
+    #       --health-interval 10s
+    #       --health-timeout 5s
+    #       --health-retries 5
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Elixir
+        uses: erlef/setup-beam@988e02bfe678367a02564f65ca2e37726dc0268f
+        with:
+          elixir-version: "1.12.2"
+          otp-version: "23.3"
+      - name: Restore dependencies cache
+        uses: actions/cache@v2
+        with:
+          path: deps
+          key: ${{ runner.os }}-mix-${{ hashFiles('**/mix.lock') }}
+          restore-keys: ${{ runner.os }}-mix-
+      - name: Install dependencies
+        run: mix deps.get --only dev
+      - name: Release
+        run: mix git_ops.release --yes
+      - name: Push Tag
+        run: git push --follow-tags
