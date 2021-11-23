@@ -5,6 +5,35 @@ See [Conventional Commits](Https://conventionalcommits.org) for commit guideline
 
 <!-- changelog -->
 
+## [v0.1.4](https://github.com/rafaeliga/phx_actions/compare/v0.1.3...v0.1.4) (2021-11-23)
+
+
+
+
+### Features:
+
+* remove db dep
+
+### Bug Fixes:
+
+* git config
+
+* tag checkout
+
+* remove env
+
+* new version
+
+* mix use
+
+* update mix version
+
+* tag
+
+* git ops release
+
+* tag name
+
 ## [v0.1.3](https://github.com/rafaeliga/phx_actions/compare/v0.1.2...v0.1.3) (2021-11-23)
 
 
