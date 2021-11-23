@@ -1,10 +1,12 @@
 defmodule PhxActions.MixProject do
   use Mix.Project
 
+  @version "0.1.1"
+
   def project do
     [
       app: :phx_actions,
-      version: "0.1.0",
+      version: "0.1.1",
       elixir: "~> 1.7",
       elixirc_paths: elixirc_paths(Mix.env()),
       compilers: [:phoenix, :gettext] ++ Mix.compilers(),
