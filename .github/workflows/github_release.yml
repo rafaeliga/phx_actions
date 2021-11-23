@@ -2,18 +2,18 @@ name: Github Release
 
 on:
   push:
-    branches: [ master ]
-
-  workflow_dispatch:
+    tags:
+      - "v*"
 
 jobs:
-  release:
-    runs-on: ubuntu-latest
+  tagged-release:
+    name: "Tagged Release"
+    runs-on: "ubuntu-latest"
 
     steps:
-      - name: Github Release
-        uses: elgohr/Github-Release-Action@v3.1
-        env:
-          GITHUB_TOKEN: ${{ secrets.RELEASE_TOKEN }}
+      - uses: "marvinpinto/action-automatic-releases@latest"
         with:
-          release: new
+          repo_token: "${{ secrets.GITHUB_TOKEN }}"
+          prerelease: false
+          files: |
+            *
