@@ -1,6 +1,6 @@
 # PhxActions
 
-# PR
+# PRpush
 
 To start your Phoenix server:
 
