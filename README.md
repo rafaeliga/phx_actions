@@ -1,6 +1,6 @@
 # PhxActions
 
-# new v0.2.1
+# new v0.2.2
 
 To start your Phoenix server:
 
