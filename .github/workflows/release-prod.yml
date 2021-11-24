@@ -1,18 +1,33 @@
 name: Release prod
 
-on:
-  push:
-    branches: [master]
+on: workflow_dispatch
 
 env:
   MIX_ENV: prod
   REGISTRY: ghcr.io
   IMAGE_NAME: ${{ github.repository }}
+  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
 jobs:
-  build-phoenix:
+  phoenix-release:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v2
-      - uses: ./.github/actions/release
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Generate phoenix release
+        uses: ./.github/actions/release
+  build-and-push-image:
+    needs: phoenix-release
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Build and Push Docker image
+        uses: ./.github/actions/docker
