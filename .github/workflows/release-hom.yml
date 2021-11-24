@@ -20,7 +20,7 @@ jobs:
       - name: Generate phoenix release
         uses: ./.github/actions/release
   build-and-push-image:
-    needs: build-phoenix
+    needs: phoenix-release
     runs-on: ubuntu-latest
     permissions:
       contents: read
