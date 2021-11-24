@@ -22,7 +22,7 @@ runs:
       with:
         images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
         tags: |
-          ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ GITHUB_SHA }}-${{ env.MIX_ENV }}
+          ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ github.sha }}-${{ env.MIX_ENV }}
           ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest-${{ env.MIX_ENV }}
           type=sha
 
