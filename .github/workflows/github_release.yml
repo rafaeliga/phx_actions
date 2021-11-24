@@ -11,7 +11,15 @@ jobs:
     runs-on: "ubuntu-latest"
 
     steps:
-      - uses: "marvinpinto/action-automatic-releases@latest"
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Create Release Notes
+        uses: actions/github-script@v4.0.2
         with:
-          repo_token: "${{ secrets.GITHUB_TOKEN }}"
-          prerelease: false
+          github-token: ${{secrets.GITHUB_TOKEN}}
+          script: |
+            await github.request(`POST /repos/${{ github.repository }}/releases`, {
+              tag_name: "${{ github.ref }}",
+              generate_release_notes: true
+            });
