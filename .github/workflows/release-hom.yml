@@ -15,7 +15,8 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-      - uses: ./.github/actions/release
+      - name: Custom Action
+        uses: ./.github/actions/release
   build-and-push-image:
     needs: build-phoenix
     runs-on: ubuntu-latest
