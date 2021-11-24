@@ -2,12 +2,15 @@ changelog:
   categories:
     - title: Breaking Changes
       labels:
+        - Semver-Major
         - breaking-change
     - title: Features
       labels:
+        - Semver-Minor
         - feature
     - title: Bug fixes
       labels:
+        - Semver-Patch
         - bug
     - title: Other Changes
       labels:
