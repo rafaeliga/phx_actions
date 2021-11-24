@@ -1,6 +1,6 @@
 # PhxActions
 
-# new fix
+# new other
 
 To start your Phoenix server:
 
