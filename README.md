@@ -1,6 +1,6 @@
 # PhxActions
 
-# new fix PR
+# tools
 
 To start your Phoenix server:
 
