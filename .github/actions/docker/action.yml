@@ -24,6 +24,7 @@ runs:
         tags: |
           ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ GITHUB_SHA }}-${{ env.MIX_ENV }}
           ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest-${{ env.MIX_ENV }}
+          type=sha
 
     - name: Build and push Docker image
       uses: docker/build-push-action@ad44023a93711e3deb337508980b4b5e9bcdc5dc
