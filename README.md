@@ -1,6 +1,6 @@
 # PhxActions
 
-# new fewfewfw
+# new 3.1
 
 To start your Phoenix server:
 
