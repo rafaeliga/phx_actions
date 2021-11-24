@@ -1,6 +1,6 @@
 # PhxActions
 
-# new case?
+# new down
 
 To start your Phoenix server:
 
