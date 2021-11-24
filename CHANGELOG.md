@@ -5,6 +5,29 @@ See [Conventional Commits](Https://conventionalcommits.org) for commit guideline
 
 <!-- changelog -->
 
+## [v0.5.0](https://github.com/rafaeliga/phx_actions/compare/v0.4.0...v0.5.0) (2021-11-24)
+
+
+
+
+### Features:
+
+* new release yml
+
+* upcase
+
+### Bug Fixes:
+
+* add Semver labels
+
+* new release.yml config
+
+* remove release exclude
+
+* PR
+
+* downcase
+
 ## [v0.3.0](https://github.com/rafaeliga/phx_actions/compare/v0.2.5...v0.3.0) (2021-11-24)
 
 
