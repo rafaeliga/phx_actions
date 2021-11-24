@@ -1,6 +1,6 @@
 # PhxActions
 
-# tools
+# labels
 
 To start your Phoenix server:
 
