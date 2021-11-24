@@ -1,11 +1,14 @@
 changelog:
   categories:
+    - title: Breaking Changes
+      labels:
+        - breaking-change
     - title: Features
       labels:
-        - feat
-    - title: Bugs
+        - feature
+    - title: Bug fixes
       labels:
-        - fix
+        - bug
     - title: Other Changes
       labels:
         - "*"
