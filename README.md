@@ -1,6 +1,6 @@
 # PhxActions
 
-# new down
+# new fix PR
 
 To start your Phoenix server:
 
