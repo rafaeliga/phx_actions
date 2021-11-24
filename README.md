@@ -1,6 +1,6 @@
 # PhxActions
 
-# new 3.1
+# newPR
 
 To start your Phoenix server:
 
