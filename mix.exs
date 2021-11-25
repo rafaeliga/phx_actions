@@ -12,7 +12,14 @@ defmodule PhxActions.MixProject do
       compilers: [:phoenix, :gettext] ++ Mix.compilers(),
       start_permanent: Mix.env() == :prod,
       aliases: aliases(),
-      deps: deps()
+      deps: deps(),
+      test_coverage: [tool: ExCoveralls],
+      preferred_cli_env: [
+        coveralls: :test,
+        "coveralls.detail": :test,
+        "coveralls.post": :test,
+        "coveralls.html": :test
+      ]
     ]
   end
 
@@ -48,7 +55,8 @@ defmodule PhxActions.MixProject do
       {:jason, "~> 1.0"},
       {:plug_cowboy, "~> 2.0"},
       {:credo, "~> 1.6.0-rc.1", only: [:dev, :test], runtime: false},
-      {:git_ops, "~> 2.4.2", only: [:dev]}
+      {:git_ops, "~> 2.4.2", only: [:dev]},
+      {:excoveralls, "~> 0.10", only: :test}
     ]
   end
 
