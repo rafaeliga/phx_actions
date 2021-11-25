@@ -4,4 +4,8 @@ defmodule PhxActions.Cover do
 
     sum
   end
+
+  def fnc2 do
+    true
+  end
 end
