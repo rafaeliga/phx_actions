@@ -5,16 +5,17 @@ on:
     inputs:
       environment:
         type: environment
-  workflow_call:
-    outputs:
-      workflow_output1:
-        description: "The first job output"
-        value: ${{ github.event.inputs.environment }}
 
 env:
   MIX_ENV: ${{ github.event.inputs.environment }}
+  AWS_EB_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+  AWS_EB_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+  ENDPOINT_HOST: ${{ secrets.ENDPOINT_HOST }}
+  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   REGISTRY: ghcr.io
   IMAGE_NAME: ${{ github.repository }}
+  SECRET_KEY_BASE: ${{ secrets.SECRET_KEY_BASE }}
+  USE_SSL: true
 
 jobs:
   phoenix-release:
@@ -93,12 +94,7 @@ jobs:
   aws:
     needs: docker
     runs-on: ubuntu-latest
-    env:
-      AWS_EB_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-      AWS_EB_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-      ENDPOINT_HOST: ${{ secrets.ENDPOINT_HOST }}
-      SECRET_KEY_BASE: ${{ secrets.SECRET_KEY_BASE }}
-      USE_SSL: true
+    environment: ${{ github.event.inputs.environment }}
 
     if: github.ref == 'refs/heads/master'
     steps:
