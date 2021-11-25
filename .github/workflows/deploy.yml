@@ -39,7 +39,7 @@ jobs:
         run: |
           envsubst < priv/setup/aws/Dockerrun.aws.json > ./Dockerrun.aws.json
 
-          eb use phxactions-${{ GITHUB_ENV }}
+          eb use phxactions-$GITHUB_ENV
 
           envsubst < priv/setup/aws/eb.env > .ebextensions/options.config
 
