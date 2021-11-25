@@ -13,11 +13,13 @@ jobs:
     runs-on: ubuntu-latest
     environment: ${{ github.event.inputs.env }}
     env:
-      AWS_EB_ACCESS_KEY_ID: ${{secrets.AWS_ACCESS_KEY_ID}}
-      AWS_EB_SECRET_ACCESS_KEY: ${{secrets.AWS_SECRET_ACCESS_KEY}}
-      ENDPOINT_HOST: phxactions-env.eba-evmmmq7g.us-east-1.elasticbeanstalk.com
-      SECRET_KEY_BASE: ${{secrets.SECRET_KEY_BASE}}
+      AWS_EB_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      AWS_EB_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      ENDPOINT_HOST: ${{ secrets.ENDPOINT_HOST }}
+      SECRET_KEY_BASE: ${{ secrets.SECRET_KEY_BASE }}
       USE_SSL: true
+
+    if: github.ref == 'refs/heads/master'
     steps:
       - uses: actions/checkout@v2
       - name: Set up Python 3.6 (needed for eb cli)
@@ -26,7 +28,7 @@ jobs:
           python-version: "3.6"
       - name: Configure credentials
         run: |
-          echo ${{ env.GITHUB_ENV }}
+          echo $GITHUB_ENV
           mkdir ~/.aws
           envsubst < priv/setup/aws/aws.env > ~/.aws/credentials
       - name: Install eb cli
@@ -37,7 +39,7 @@ jobs:
         run: |
           envsubst < priv/setup/aws/Dockerrun.aws.json > ./Dockerrun.aws.json
 
-          eb use phxactions-${{ env.GITHUB_ENV }}
+          eb use phxactions-${{ GITHUB_ENV }}
 
           envsubst < priv/setup/aws/eb.env > .ebextensions/options.config
 
