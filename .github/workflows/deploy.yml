@@ -6,6 +6,11 @@ on:
       environment:
         type: environment
 
+outputs:
+  random-number:
+    description: "ENV"
+    value: ${{ github.event.inputs.environment }}
+
 env:
   MIX_ENV: ${{ github.event.inputs.environment }}
   REGISTRY: ghcr.io
