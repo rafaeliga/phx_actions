@@ -5,11 +5,11 @@ on:
     inputs:
       environment:
         type: environment
-
-outputs:
-  random-number:
-    description: "ENV"
-    value: ${{ github.event.inputs.environment }}
+  workflow_call:
+    outputs:
+      workflow_output1:
+        description: "The first job output"
+        value: ${{ github.event.inputs.environment }}
 
 env:
   MIX_ENV: ${{ github.event.inputs.environment }}
