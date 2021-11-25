@@ -105,7 +105,6 @@ jobs:
           python-version: "3.6"
       - name: Configure credentials
         run: |
-          echo ${{ github.event.inputs.environment }}
           mkdir ~/.aws
           envsubst < priv/setup/aws/aws.env > ~/.aws/credentials
       - name: Install eb cli
