@@ -3,15 +3,12 @@ name: Deploy
 on:
   workflow_dispatch:
     inputs:
-      env:
-        description: "ENV to deploy"
-        required: true
-        default: "hom"
+      environment:
+        type: environment
 
 jobs:
   deploy_aws:
     runs-on: ubuntu-latest
-    environment: hom
     env:
       AWS_EB_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
       AWS_EB_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
@@ -28,7 +25,7 @@ jobs:
           python-version: "3.6"
       - name: Configure credentials
         run: |
-          echo ${{ github.event.inputs.env }}
+          echo ${{ github.event.inputs.environment }}
           mkdir ~/.aws
           envsubst < priv/setup/aws/aws.env > ~/.aws/credentials
       - name: Install eb cli
@@ -39,7 +36,7 @@ jobs:
         run: |
           envsubst < priv/setup/aws/Dockerrun.aws.json > ./Dockerrun.aws.json
 
-          eb use phxactions-${{ github.event.inputs.env }}
+          eb use phxactions-${{ github.event.inputs.environment }}
 
           envsubst < priv/setup/aws/eb.env > .ebextensions/options.config
 
