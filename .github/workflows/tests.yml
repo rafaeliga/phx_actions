@@ -45,6 +45,7 @@ jobs:
         uses: romeovs/lcov-reporter-action@v0.2.16
         with:
           lcov-file: ./cover/lcov.info
+          github-token: ${{ secrets.GITHUB_TOKEN }}
       - name: Upload deps result
         uses: actions/upload-artifact@v2
         with:
