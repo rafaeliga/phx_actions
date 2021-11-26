@@ -57,7 +57,8 @@ defmodule PhxActions.MixProject do
       {:plug_cowboy, "~> 2.0"},
       {:credo, "~> 1.6.0-rc.1", only: [:dev, :test], runtime: false},
       {:git_ops, "~> 2.4.2", only: [:dev]},
-      {:excoveralls, "~> 0.10", only: :test}
+      {:excoveralls, "~> 0.10", only: :test},
+      {:lcov_ex, "~> 0.2", only: [:dev, :test], runtime: false}
     ]
   end
 

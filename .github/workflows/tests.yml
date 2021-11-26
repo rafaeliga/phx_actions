@@ -40,11 +40,21 @@ jobs:
       - name: Install dependencies
         run: mix deps.get
       - name: Run tests
-        run: mix test
-      - name: Coverage
         run: |
-          mix do compile --warnings-as-errors, coveralls.json
-          bash <(curl -s https://codecov.io/bash)
+          mix test --cover
+          mix coveralls.xml
+          cp cover/excoveralls.xml coverage.xml
+      - name: Changed Files
+        uses: lots0logs/gh-action-get-changed-files@2.1.4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Check test coverage
+        uses: AveryCameronUofR/test-coverage-check-gh-action@1.0.10
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          branch: master
+          minNewCoverage: 0.8 (Optional, 0.8 default)
+          maxCoverageChange: 0.1 (Optional, 0.1 default)
       - name: Upload deps result
         uses: actions/upload-artifact@v2
         with:
