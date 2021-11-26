@@ -53,8 +53,8 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           branch: master
-          minNewCoverage: 0.8 (Optional, 0.8 default)
-          maxCoverageChange: 0.1 (Optional, 0.1 default)
+          # minNewCoverage: 0.8 (Optional, 0.8 default)
+          # maxCoverageChange: 0.1 (Optional, 0.1 default)
       - name: Upload deps result
         uses: actions/upload-artifact@v2
         with:
