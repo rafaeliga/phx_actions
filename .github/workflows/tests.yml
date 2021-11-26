@@ -52,7 +52,7 @@ jobs:
         uses: AveryCameronUofR/test-coverage-check-gh-action@1.0.10
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          branch: ${{ github.base_ref }}
+          branch: master
           minNewCoverage: 0.8 (Optional, 0.8 default)
           maxCoverageChange: 0.1 (Optional, 0.1 default)
       - name: Upload deps result
