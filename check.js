@@ -1,6 +1,5 @@
 module.exports = async ({github, context}) => {
-  console.log(github)
-  console.log(context)
+  console.log(github.event.pull_request.head.sha)
   
   const fs = require('fs')
 
@@ -9,7 +8,7 @@ module.exports = async ({github, context}) => {
   )
   
   // files.forEach(file => {
-  //   github.request(`POST ${context.payload.pull_request._links.comments.href}`, {
+  //   github.request(`POST ${context.payload.pull_request.comments_url}`, {
   //     body: 'You missed this file to create a test',
   //     commit_id: context.sha,
   //     line: 1,
