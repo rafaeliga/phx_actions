@@ -19,6 +19,7 @@ defmodule PhxActions.MixProject do
         "coveralls.detail": :test,
         "coveralls.post": :test,
         "coveralls.html": :test,
+        "coveralls.json": :test,
         "coveralls.xml": :test
       ]
     ]

@@ -37,6 +37,14 @@ jobs:
           path: deps
           key: ${{ runner.os }}-mix-${{ hashFiles('**/mix.lock') }}
           restore-keys: ${{ runner.os }}-mix-
+      - name: Test Comment
+        run: |
+          await octokit.request('POST /repos/rafaeliga/phx_actions/pulls/15/comments', {
+            owner: 'rafaeliga',
+            repo: 'phx_actions',
+            pull_number: 15,
+            body: 'test action comment'
+          })
       - name: Changed Files
         uses: lots0logs/gh-action-get-changed-files@2.1.4
         with:
@@ -53,14 +61,6 @@ jobs:
         run: |
           mix test --cover
           mix coveralls.xml
-          cp cover/excoveralls.xml coverage.xml
-      # - name: Check test coverage
-      #   uses: AveryCameronUofR/test-coverage-check-gh-action@1.0.10
-      #   with:
-      #     token: ${{ secrets.GITHUB_TOKEN }}
-      #     branch: master
-      # minNewCoverage: 0.8 (Optional, 0.8 default)
-      # maxCoverageChange: 0.1 (Optional, 0.1 default)
       - name: Upload deps result
         uses: actions/upload-artifact@v2
         with:
