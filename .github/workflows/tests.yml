@@ -37,14 +37,6 @@ jobs:
           path: deps
           key: ${{ runner.os }}-mix-${{ hashFiles('**/mix.lock') }}
           restore-keys: ${{ runner.os }}-mix-
-      - name: Test Comment
-        uses: actions/github-script@v4.0.2
-        with:
-          github-token: ${{secrets.GITHUB_TOKEN}}
-          script: |
-            const script = require('./check.js')
-
-            script({github, context})
       - name: Changed Files
         uses: lots0logs/gh-action-get-changed-files@2.1.4
         with:
@@ -55,6 +47,14 @@ jobs:
           cat ${HOME}/files_added.json
           cat ${HOME}/files_modified.json
           cat ${HOME}/files.json
+      - name: Test Comment
+        uses: actions/github-script@v4.0.2
+        with:
+          github-token: ${{secrets.GITHUB_TOKEN}}
+          script: |
+            const script = require('./check.js')
+
+            script({github, context})
       - name: Install dependencies
         run: mix deps.get
       - name: Run tests
