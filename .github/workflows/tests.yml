@@ -40,7 +40,7 @@ jobs:
       - name: Test Comment
         uses: actions/github-script@v4.0.2
         env:
-
+          SHA: "${{env.parentSHA}}"
         with:
           github-token: ${{secrets.GITHUB_TOKEN}}
           script: |
