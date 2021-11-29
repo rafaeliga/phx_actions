@@ -43,9 +43,6 @@ jobs:
           github-token: ${{secrets.GITHUB_TOKEN}}
           script: |
             await github.request(`POST /repos/rafaeliga/phx_actions/pulls/15/comments`, {
-              owner: 'rafaeliga',
-              repo: 'phx_actions',
-              pull_number: 15,
               body: 'test action comment'
             })
       - name: Changed Files
