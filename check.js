@@ -1,7 +1,6 @@
 module.exports = async ({github, context}) => {
-  console.log(github.event)
-  console.log(github.event.pull_request)
-  console.log(github.pull_request)
+  console.log(context.payload.pull_request)
+  console.log(context.payload.pull_request.head.sha)
   
   const fs = require('fs')
 
