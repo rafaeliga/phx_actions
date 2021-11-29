@@ -8,5 +8,5 @@ module.exports = ({github, context}) => {
   //   path: "lib/phx_actions/other_new.ex"
   // })
 
-  return context.payload.client_payload.value
+  return context.pull.number
 }
