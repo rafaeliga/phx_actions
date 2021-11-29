@@ -1,4 +1,4 @@
-module.exports = ({github, context}) => {
+module.exports = async ({github, context}) => {
   console.log("=================================== CHECK ===================")
   console.log(`=================================== PR: ${context.payload.pull_request.number} ===================`)
   console.log(context.repo)
