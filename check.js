@@ -1,3 +1,5 @@
+import {readFileSync} from 'fs'
+
 module.exports = async ({github, context}) => {
   console.log("=================================== CHECK ===================")
   console.log(process.env)
@@ -9,7 +11,9 @@ module.exports = async ({github, context}) => {
     path: "lib/phx_actions/other_new.ex"
   })
 
-  let file = require(`${process.env}/files.json`)
+  let file = JSON.parse(
+    readFileSync(`${process.env}/files.json`, {encoding: 'utf8'})
+  )
   console.log(file)
 
   return context.issue.number
