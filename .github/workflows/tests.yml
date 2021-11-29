@@ -46,13 +46,6 @@ jobs:
           script: |
             const script = require('./check.js')
             console.log(script({github, context}))
-
-            await github.rest.pulls.createReviewComment({
-              body: 'test action comment REST',
-              pull_number: context.pull.number,
-              line: 2,
-              path: "lib/phx_actions/other_new.ex"
-            })
       - name: Changed Files
         uses: lots0logs/gh-action-get-changed-files@2.1.4
         with:

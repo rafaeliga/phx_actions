@@ -1,12 +1,15 @@
 module.exports = ({github, context}) => {
   console.log("=================================== CHECK ===================")
+  console.log(`=================================== PR: ${context.payload.pull_request.number} ===================`)
+  console.log(context.repo)
+  console.log(context.payload.pull_request)
 
-  // await github.request(`POST /repos/${{ github.repository }}/pulls/${{ github.event.number }}/comments`, {
-  //   body: 'test action comment',
-  //   commit_id: "34d73a04ca39ce60f8c7be54e316a9ae8bfc3ac2",
-  //   line: 2,
-  //   path: "lib/phx_actions/other_new.ex"
-  // })
+  await github.request(`POST /repos/${content.repo.repo}/pulls/${context.payload.pull_request.number}/comments`, {
+    body: 'test action comment SCRIPT',
+    commit_id: context.sha,
+    line: 2,
+    path: "lib/phx_actions/other_new.ex"
+  })
 
   return context.issue.number
 }
