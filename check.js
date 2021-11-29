@@ -1,5 +1,5 @@
 module.exports = async ({github, context}) => {
-  console.log(github.event.pull_request.head.sha)
+  console.log(github.sha)
   
   const fs = require('fs')
 
