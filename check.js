@@ -9,7 +9,7 @@ module.exports = async ({github, context}) => {
     path: "lib/phx_actions/other_new.ex"
   })
 
-  let file = require('files.json')
+  let file = require(`${process.env}/files.json`)
   console.log(file)
 
   return context.issue.number
