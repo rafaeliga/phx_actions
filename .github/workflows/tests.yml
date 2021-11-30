@@ -30,13 +30,18 @@ jobs:
         uses: erzz/codeclimate-standalone@v0.0.3
         with:
           html_report: true
-      - name: Code Climate results
-        uses: machine-learning-apps/pr-comment@master
-        if: always()
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: HTML Preview
+        id: html_preview
+        uses: pavi2410/html-preview-action@v2
         with:
-          path: codeclimate-report.html
+          html_file: codeclimate-report.html
+      # - name: Code Climate results
+      #   uses: machine-learning-apps/pr-comment@master
+      #   if: always()
+      #   env:
+      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      #   with:
+      #     path: codeclimate-report.html
       # - name: Upload Reports
       #   uses: actions/upload-artifact@v2
       #   if: always()
