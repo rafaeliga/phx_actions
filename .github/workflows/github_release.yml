@@ -16,13 +16,10 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Create Release Notes
-        uses: actions/github-script@v4.0.2
+      - name: Release
+        uses: softprops/action-gh-release@v1
         with:
-          github-token: ${{secrets.GITHUB_TOKEN}}
-          script: |
-            await github.request(`POST /repos/${{ github.repository }}/releases`, {
-              tag_name: "${{ github.ref }}",
-              generate_release_notes: true,
-              body: "test new body"
-            });
+          body_path: CHANGELOG.md
+          # token: ${{ secrets.CUSTOM_GITHUB_TOKEN }}
+        # env:
+        #   GITHUB_REPOSITORY: rafaeliga/phx_actions
