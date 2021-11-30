@@ -30,14 +30,20 @@ jobs:
         uses: erzz/codeclimate-standalone@v0.0.3
         with:
           html_report: true
-      - name: Upload Reports
-        uses: actions/upload-artifact@v2
-        if: always()
+      - name: Code Climate results
+        uses: machine-learning-apps/pr-comment@master
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          name: Code Climate Reports
-          path: |
-            codeclimate-report.json
-            codeclimate-report.html
+          path: codeclimate-report.html
+      # - name: Upload Reports
+      #   uses: actions/upload-artifact@v2
+      #   if: always()
+      #   with:
+      #     name: Code Climate Reports
+      #     path: |
+      #       codeclimate-report.json
+      #       codeclimate-report.html
       # - name: Set up Elixir
       #   uses: erlef/setup-beam@988e02bfe678367a02564f65ca2e37726dc0268f
       #   with:
