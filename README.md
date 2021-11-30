@@ -1,6 +1,6 @@
 # PhxActions
 
-# build
+# github
 
 To start your Phoenix server:
 
