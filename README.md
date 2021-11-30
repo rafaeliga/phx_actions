@@ -1,6 +1,6 @@
 # PhxActions
 
-# feat ok
+# fest
 
 To start your Phoenix server:
 
