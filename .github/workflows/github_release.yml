@@ -16,6 +16,7 @@ jobs:
 
       - name: Get release body
         run: |
+          sed '1,/## \['${{ github.ref_name }}'\]/d;/## \[v.*\]/Q' CHANGELOG.md
           echo "RELEASE_DESCRIPTION=$(sed '1,/## \['${{ github.ref_name }}'\]/d;/## \[v.*\]/Q' CHANGELOG.md)" >> $GITHUB_ENV
 
       - name: Create Release Notes
