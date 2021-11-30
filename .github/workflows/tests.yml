@@ -32,6 +32,7 @@ jobs:
           html_report: true
       - name: Code Climate results
         uses: machine-learning-apps/pr-comment@master
+        if: always()
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
