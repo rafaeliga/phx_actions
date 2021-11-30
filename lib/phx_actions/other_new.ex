@@ -1,5 +1,5 @@
 defmodule PhxActions.OtherNew do
-  def change3 do
+  def change55 do
     IO.inspect("HHH")
   end
 

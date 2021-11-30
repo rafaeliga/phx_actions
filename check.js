@@ -14,7 +14,8 @@ module.exports = async ({github, context}) => {
       commit_id: context.payload.pull_request.head.sha,
       line: 2,
       path: file,
-      side: "RIGHT"
+      side: "RIGHT",
+      pull_number: 16
     })
   });
 
