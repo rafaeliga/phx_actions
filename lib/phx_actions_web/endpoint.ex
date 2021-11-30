@@ -1,3 +1,5 @@
+# CHANGED HERE 2
+
 defmodule PhxActionsWeb.Endpoint do
   use Phoenix.Endpoint, otp_app: :phx_actions
 
@@ -9,10 +11,6 @@ defmodule PhxActionsWeb.Endpoint do
     key: "_phx_actions_key",
     signing_salt: "eVfiA/fY"
   ]
-
-  socket "/socket", PhxActionsWeb.UserSocket,
-    websocket: true,
-    longpoll: false
 
   socket "/live", Phoenix.LiveView.Socket, websocket: [connect_info: [session: @session_options]]
 
