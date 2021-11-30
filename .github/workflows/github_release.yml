@@ -24,9 +24,7 @@ jobs:
           script: |
             const fs = require('fs')
 
-            let body = JSON.parse(
-              fs.readFileSync(`${process.env.HOME}/changelog-body.txt`, {encoding: 'utf8'})
-            )
+            let body = fs.readFileSync(`${process.env.HOME}/changelog-body.txt`, {encoding: 'utf8'})
 
             await github.request(`POST /repos/${{ github.repository }}/releases`, {
               name: "${{ github.ref }}",
