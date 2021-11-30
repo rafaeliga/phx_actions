@@ -1,5 +1,9 @@
 module.exports = async ({github, context}) => {
-  await github.request(`POST /repos/${github.repository}/pulls/${github.event.number}/comments`, {
+  console.log("original:", `/repos/${github.repository}/pulls/15/comments`);
+  let from_payload = context.payload.pull_request.comments_url
+  console.log("FROM: ", from_payload)
+
+  await github.request(`POST ${from_payload}`, {
     body: 'SINGLE inside',
     commit_id: context.payload.pull_request.head.sha,
     line: 2,
