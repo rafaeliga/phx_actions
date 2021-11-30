@@ -6,10 +6,13 @@ module.exports = async ({github, context}) => {
   )
   
   files.forEach(file => {
+    console.log(file)
+    console.log(context.payload.pull_request.head.sha)
+
     github.request(`POST ${context.payload.pull_request.comments_url}`, {
       body: 'You missed this file to create a test',
       commit_id: context.payload.pull_request.head.sha,
-      line: 1,
+      line: 4,
       path: file
     })
   });
