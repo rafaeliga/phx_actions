@@ -1,6 +1,6 @@
 # PhxActions
 
-# fest
+# ref
 
 To start your Phoenix server:
 
