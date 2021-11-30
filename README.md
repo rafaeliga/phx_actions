@@ -1,6 +1,6 @@
 # PhxActions
 
-# ref
+# build
 
 To start your Phoenix server:
 
