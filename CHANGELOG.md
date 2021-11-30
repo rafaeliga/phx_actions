@@ -5,6 +5,15 @@ See [Conventional Commits](Https://conventionalcommits.org) for commit guideline
 
 <!-- changelog -->
 
+## [v0.6.2](https://github.com/rafaeliga/phx_actions/compare/v0.6.1...v0.6.2) (2021-11-30)
+
+
+
+
+### Bug Fixes:
+
+* release env
+
 ## [v0.6.1](https://github.com/rafaeliga/phx_actions/compare/v0.6.0...v0.6.1) (2021-11-30)
 
 
