@@ -15,20 +15,21 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Get release body
-        run: |
-          sed '1,/## \['${{ github.ref_name }}'\]/d;/## \[v.*\]/Q' CHANGELOG.md
-          echo "RELEASE_DESCRIPTION=$(sed '1,/## \['${{ github.ref_name }}'\]/d;/## \[v.*\]/Q' CHANGELOG.md)" >> $GITHUB_ENV
+        run: echo "$(sed '1,/## \['${{ github.ref_name }}'\]/d;/## \[v.*\]/Q' CHANGELOG.md)" > ${HOME}/changelog-body.txt
 
       - name: Create Release Notes
         uses: actions/github-script@v4.0.2
         with:
           github-token: ${{secrets.GITHUB_TOKEN}}
           script: |
-            console.log(process.env)
-            console.log(process.env.RELEASE_DESCRIPTION)
+            const fs = require('fs')
+
+            let body = JSON.parse(
+              fs.readFileSync(`${process.env.HOME}/changelog-body.txt`, {encoding: 'utf8'})
+            )
 
             await github.request(`POST /repos/${{ github.repository }}/releases`, {
               name: "${{ github.ref }}",
               tag_name: "${{ github.ref }}",
-              body: "test new body"
+              body: body
             });
