@@ -14,10 +14,12 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Release
-        uses: softprops/action-gh-release@v1
+      - name: Create Release Notes
+        uses: actions/github-script@v4.0.2
         with:
-          body_path: CHANGELOG.md
-          # token: ${{ secrets.CUSTOM_GITHUB_TOKEN }}
-        # env:
-        #   GITHUB_REPOSITORY: rafaeliga/phx_actions
+          github-token: ${{secrets.GITHUB_TOKEN}}
+          script: |
+            await github.request(`POST /repos/${{ github.repository }}/releases`, {
+              tag_name: "${{ github.ref }}",
+              body: "test new body"
+            });
