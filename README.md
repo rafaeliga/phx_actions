@@ -1,6 +1,6 @@
 # PhxActions
 
-# feat
+# feat ok
 
 To start your Phoenix server:
 
