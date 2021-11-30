@@ -1,4 +1,11 @@
 module.exports = async ({github, context}) => {
+  await github.request(`POST /repos/${github.repository}/pulls/${github.event.number}/comments`, {
+    body: 'SINGLE inside',
+    commit_id: context.payload.pull_request.head.sha,
+    line: 2,
+    path: "lib/phx_actions/other_new.ex"
+  })
+
   const fs = require('fs')
 
   let files = JSON.parse(
