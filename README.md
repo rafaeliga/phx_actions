@@ -1,6 +1,6 @@
 # PhxActions
 
-# github
+# new tag
 
 To start your Phoenix server:
 
