@@ -5,8 +5,6 @@ module.exports = async ({github, context}) => {
     fs.readFileSync(`${process.env.HOME}/files.json`, {encoding: 'utf8'})
   )
 
-  console.log
-  
   files.forEach(file => {
     github.request(`POST /repos/${process.env.GITHUB_REPOSITORY}/pulls/${context.payload.pull_request.number}/comments`, {
       body: 'You missed this file to create a test',
