@@ -11,11 +11,9 @@ module.exports = async ({github, context}) => {
 
     github.request(`POST ${context.payload.pull_request.comments_url}`, {
       body: 'You missed this file to create a test',
-      commit_id: context.payload.pull_request.head.sha,
-      line: 2,
-      path: file,
-      side: "RIGHT",
-      pull_number: 16
+      // commit_id: context.payload.pull_request.head.sha,
+      line: 1,
+      path: file
     })
   });
 
