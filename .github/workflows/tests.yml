@@ -61,32 +61,32 @@ jobs:
         run: |
           mix test --cover
           mix coveralls.xml
-      - name: Upload deps result
-        uses: actions/upload-artifact@v2
-        with:
-          name: elixir-deps
-          path: deps
-  nodejs:
-    needs: elixir
-    runs-on: ubuntu-latest
+      # - name: Upload deps result
+      #   uses: actions/upload-artifact@v2
+      #   with:
+      #     name: elixir-deps
+      #     path: deps
+  # nodejs:
+  #   needs: elixir
+  #   runs-on: ubuntu-latest
 
-    steps:
-      - uses: actions/checkout@v2
+  #   steps:
+  #     - uses: actions/checkout@v2
 
-      - name: Set up node
-        uses: actions/setup-node@v2
-        with:
-          node-version: "14.16.1"
+  #     - name: Set up node
+  #       uses: actions/setup-node@v2
+  #       with:
+  #         node-version: "14.16.1"
 
-      - name: Download deps result
-        uses: actions/download-artifact@v2
-        with:
-          name: elixir-deps
-          path: deps
+  #     - name: Download deps result
+  #       uses: actions/download-artifact@v2
+  #       with:
+  #         name: elixir-deps
+  #         path: deps
 
-      - name: Build
-        run: |
-          npm install --prefix assets
-          npm run build --prefix assets
-      - name: Test
-        run: npm test --prefix=assets
+  #     - name: Build
+  #       run: |
+  #         npm install --prefix assets
+  #         npm run build --prefix assets
+  #     - name: Test
+  #       run: npm test --prefix=assets
