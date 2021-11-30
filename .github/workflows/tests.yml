@@ -33,6 +33,7 @@ jobs:
       - name: HTML Preview
         id: html_preview
         uses: pavi2410/html-preview-action@v2
+        if: always()
         with:
           html_file: codeclimate-report.html
       # - name: Code Climate results
