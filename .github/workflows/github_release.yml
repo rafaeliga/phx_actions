@@ -27,7 +27,7 @@ jobs:
             let body = fs.readFileSync(`${process.env.HOME}/changelog-body.txt`, {encoding: 'utf8'})
 
             await github.request(`POST /repos/${{ github.repository }}/releases`, {
-              name: "${{ github.ref }}",
+              name: "${{ github.ref_name }}",
               tag_name: "${{ github.ref }}",
               body: body
             });
