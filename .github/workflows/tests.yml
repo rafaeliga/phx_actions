@@ -27,6 +27,20 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
+      - name: Set up Elixir
+        uses: erlef/setup-beam@988e02bfe678367a02564f65ca2e37726dc0268f
+        with:
+          elixir-version: "1.12.2"
+          otp-version: "23.3"
+      - name: Restore dependencies cache
+        uses: actions/cache@v2
+        with:
+          path: deps
+          key: ${{ runner.os }}-mix-${{ hashFiles('**/mix.lock') }}
+          restore-keys: ${{ runner.os }}-mix-
+      - name: Install dependencies
+        run: mix deps.get
+
       - name: credo
         uses: red-shirts/reviewdog-action-credo@v1
         with:
@@ -74,19 +88,6 @@ jobs:
       #         body: body
       #       })
 
-      # - name: Set up Elixir
-      #   uses: erlef/setup-beam@988e02bfe678367a02564f65ca2e37726dc0268f
-      #   with:
-      #     elixir-version: "1.12.2"
-      #     otp-version: "23.3"
-      # - name: Restore dependencies cache
-      #   uses: actions/cache@v2
-      #   with:
-      #     path: deps
-      #     key: ${{ runner.os }}-mix-${{ hashFiles('**/mix.lock') }}
-      #     restore-keys: ${{ runner.os }}-mix-
-      # - name: Install dependencies
-      #   run: mix deps.get
       # - name: Check quality
       #   run: |
       #     mix credo --strict
