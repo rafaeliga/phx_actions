@@ -27,22 +27,22 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: Annotate Checks
-        uses: agyemanjp/ci-checks-action@2.1.1
-        with:
-          ghToken: ${{ secrets.GITHUB_TOKEN }}
-          checks: '[
-            {
-            "name": "lint",
-            "fileName": "lib/phx_actions/cover.ex",
-            "prChangesOnly": true
-            },
-            {
-            "name": "test",
-            "fileName": "lib/phx_actions/other_new.ex",
-            "prChangesOnly": false
-            }
-            ]'
+      # - name: Annotate Checks
+      #   uses: agyemanjp/ci-checks-action@2.1.1
+      #   with:
+      #     ghToken: ${{ secrets.GITHUB_TOKEN }}
+      #     checks: '[
+      #       {
+      #       "name": "lint",
+      #       "fileName": "lib/phx_actions/cover.ex",
+      #       "prChangesOnly": true
+      #       },
+      #       {
+      #       "name": "test",
+      #       "fileName": "lib/phx_actions/other_new.ex",
+      #       "prChangesOnly": false
+      #       }
+      #       ]'
 
       # - name: Report Code Climate
       #   uses: actions/github-script@v5
@@ -74,6 +74,10 @@ jobs:
           restore-keys: ${{ runner.os }}-mix-
       - name: Install dependencies
         run: mix deps.get
+      - name: Check quality
+        run: |
+          mix format --check-formatted
+          mix credo --strict
       - name: Run tests
         run: |
           mix test --cover
