@@ -1,6 +1,6 @@
 # PhxActions
 
-# new tag
+# prev
 
 To start your Phoenix server:
 

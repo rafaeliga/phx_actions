@@ -1,0 +1,7 @@
+runner:
+  credo:
+    cmd: mix credo suggest --strict --format=flycheck
+    errorformat:
+      - "%f:%l:%c: %t: %m"
+      - "%f:%l: %t: %m"
+    level: warning
