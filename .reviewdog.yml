@@ -1,6 +1,6 @@
 runner:
   credo:
-    cmd: mix credo suggest --strict --format=flycheck
+    cmd: mix credo suggest --strict --format=flycheck --mute-exit-status
     errorformat:
       - "%f:%l:%c: %t: %m"
       - "%f:%l: %t: %m"
