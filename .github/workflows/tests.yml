@@ -51,8 +51,9 @@ jobs:
         uses: erzz/codeclimate-standalone@v0.0.3
         with:
           html_report: true
-      - name: Test Comment
+      - name: Report Code Climate
         uses: actions/github-script@v5
+        if: always()
         with:
           github-token: ${{secrets.GITHUB_TOKEN}}
           script: |
