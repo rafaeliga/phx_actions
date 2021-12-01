@@ -1,6 +1,6 @@
 defmodule PhxActions do
   def test_action do
-    String.codepoints("1") |> IO.inspect()
+    String.codepoints("1")
   end
 end
 
