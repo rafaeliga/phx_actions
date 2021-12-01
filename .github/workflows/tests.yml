@@ -41,18 +41,22 @@ jobs:
       - name: Install dependencies
         run: mix deps.get
 
+      - name: Check quality
+        run: |
+          mix credo suggest --strict --format=flycheck
+
       # - name: credo
       #   uses: red-shirts/reviewdog-action-credo@v1
       #   with:
       #     github_token: ${{ secrets.github_token }}
       #     reporter: github-pr-review
 
-      - uses: reviewdog/action-setup@v1
-      - name: Run reviewdog
-        env:
-          REVIEWDOG_GITHUB_API_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          reviewdog -diff="git diff FETCH_HEAD" -reporter=github-pr-review
+      # - uses: reviewdog/action-setup@v1
+      # - name: Run reviewdog
+      #   env:
+      #     REVIEWDOG_GITHUB_API_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      #   run: |
+      #     reviewdog -diff="git diff FETCH_HEAD" -reporter=github-pr-review
 
       # - name: Annotate Checks
       #   uses: agyemanjp/ci-checks-action@2.1.1
