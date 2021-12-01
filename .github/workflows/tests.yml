@@ -26,19 +26,27 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
+      - name: Test Comment
+        uses: actions/github-script@v4.0.2
+        with:
+          github-token: ${{secrets.GITHUB_TOKEN}}
+          script: |
+            github.request(`POST /repos/${github.repository}/pulls/${github.event.number}/comments`, {
+              body: 'You <b>missed<b> this file to create a <i>test</i>'
+            })
       - name: Run Code Climate
         uses: erzz/codeclimate-standalone@v0.0.3
         with:
           html_report: true
-      - name: Pull request artifacts
-        uses: gavv/pull-request-artifacts@v1.0.0
-        if: always()
-        with:
-          commit: ${{ github.event.pull_request.head.sha }}
-          repo-token: ${{ secrets.GITHUB_TOKEN }}
-          artifacts-branch: artifacts
-          artifacts: |
-            codeclimate-report.html
+      # - name: Pull request artifacts
+      #   uses: gavv/pull-request-artifacts@v1.0.0
+      #   if: always()
+      #   with:
+      #     commit: ${{ github.event.pull_request.head.sha }}
+      #     repo-token: ${{ secrets.GITHUB_TOKEN }}
+      #     artifacts-branch: artifacts
+      #     artifacts: |
+      #       codeclimate-report.html
       # - name: HTML Preview
       #   id: html_preview
       #   uses: pavi2410/html-preview-action@v2
