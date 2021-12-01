@@ -7,7 +7,7 @@ defmodule PhxActions do
   if it comes from the database, an external API or others.
   """
 
-  def test_action do
-    String.codepoints("aaa") |> IO.inspect()
+  def test_action2 do
+    String.codepoints("bbb") |> IO.inspect()
   end
 end
