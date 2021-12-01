@@ -26,77 +26,59 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
+      - name: Set up Elixir
+        uses: erlef/setup-beam@988e02bfe678367a02564f65ca2e37726dc0268f
+        with:
+          elixir-version: "1.12.2"
+          otp-version: "23.3"
+      - name: Restore dependencies cache
+        uses: actions/cache@v2
+        with:
+          path: deps
+          key: ${{ runner.os }}-mix-${{ hashFiles('**/mix.lock') }}
+          restore-keys: ${{ runner.os }}-mix-
+      - name: Install dependencies
+        run: mix deps.get
+      - name: Run tests
+        run: |
+          mix test --cover
+      - name: Coverage
+        uses: romeovs/lcov-reporter-action@v0.2.16
+        with:
+          lcov-file: ./cover/lcov.info
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Run Code Climate
+        uses: erzz/codeclimate-standalone@v0.0.3
+        with:
+          html_report: true
       - name: Test Comment
         uses: actions/github-script@v5
         with:
           github-token: ${{secrets.GITHUB_TOKEN}}
           script: |
+            const fs = require('fs')
+
+            let body = fs.readFileSync('codeclimate-report.html', {encoding: 'utf8'})
+
             github.rest.issues.createComment({
               issue_number: context.issue.number,
               owner: context.repo.owner,
               repo: context.repo.repo,
-              body: '👋 Thanks <b>for</b> reporting <i>this</i>!'
+              body: body
             })
-      # - name: Run Code Climate
-      #   uses: erzz/codeclimate-standalone@v0.0.3
-      #   with:
-      #     html_report: true
-      # - name: Pull request artifacts
-      #   uses: gavv/pull-request-artifacts@v1.0.0
-      #   if: always()
-      #   with:
-      #     commit: ${{ github.event.pull_request.head.sha }}
-      #     repo-token: ${{ secrets.GITHUB_TOKEN }}
-      #     artifacts-branch: artifacts
-      #     artifacts: |
-      #       codeclimate-report.html
-      # - name: HTML Preview
-      #   id: html_preview
-      #   uses: pavi2410/html-preview-action@v2
-      #   if: always()
-      #   with:
-      #     html_file: codeclimate-report.html
-      # - name: Code Climate results
-      #   uses: machine-learning-apps/pr-comment@master
-      #   if: always()
-      #   env:
-      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      #   with:
-      #     path: codeclimate-report.html
-      # - name: Upload Reports
-      #   uses: actions/upload-artifact@v2
-      #   if: always()
-      #   with:
-      #     name: Code Climate Reports
-      #     path: |
-      #       codeclimate-report.json
-      #       codeclimate-report.html
-      # - name: Set up Elixir
-      #   uses: erlef/setup-beam@988e02bfe678367a02564f65ca2e37726dc0268f
-      #   with:
-      #     elixir-version: "1.12.2"
-      #     otp-version: "23.3"
-      # - name: Restore dependencies cache
-      #   uses: actions/cache@v2
-      #   with:
-      #     path: deps
-      #     key: ${{ runner.os }}-mix-${{ hashFiles('**/mix.lock') }}
-      #     restore-keys: ${{ runner.os }}-mix-
-      # - name: Install dependencies
-      #   run: mix deps.get
-      # - name: Run tests
-      #   run: |
-      #     mix test --cover
-      # - name: Coverage
-      #   uses: romeovs/lcov-reporter-action@v0.2.16
-      #   with:
-      #     lcov-file: ./cover/lcov.info
-      #     github-token: ${{ secrets.GITHUB_TOKEN }}
-      # - name: Upload deps result
-      #   uses: actions/upload-artifact@v2
-      #   with:
-      #     name: elixir-deps
-      #     path: deps
+      - name: Upload Reports
+        uses: actions/upload-artifact@v2
+        if: always()
+        with:
+          name: Code Climate Reports
+          path: |
+            codeclimate-report.json
+            codeclimate-report.html
+      - name: Upload deps result
+        uses: actions/upload-artifact@v2
+        with:
+          name: elixir-deps
+          path: deps
   # nodejs:
   #   needs: elixir
   #   runs-on: ubuntu-latest
