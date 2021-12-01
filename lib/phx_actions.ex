@@ -1,5 +1,5 @@
 defmodule PhxActions do
-  def test_action2 do
-    String.codepoints("2") |> IO.inspect()
+  def test_action do
+    String.codepoints("0") |> IO.inspect()
   end
 end
