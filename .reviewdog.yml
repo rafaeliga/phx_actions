@@ -4,4 +4,3 @@ runner:
     errorformat:
       - "%f:%l:%c: %t: %m"
       - "%f:%l: %t: %m"
-    level: warning
