@@ -76,7 +76,6 @@ jobs:
         run: mix deps.get
       - name: Check quality
         run: |
-          mix format --check-formatted
           mix credo --strict
       - name: Run tests
         run: |
