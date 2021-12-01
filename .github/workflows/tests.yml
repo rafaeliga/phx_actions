@@ -31,8 +31,11 @@ jobs:
         with:
           github-token: ${{secrets.GITHUB_TOKEN}}
           script: |
-            github.request(`POST /repos/${process.env.GITHUB_REPOSITORY}/pulls/17/comments`, {
-              body: 'You <b>missed<b> this file to create a <i>test</i>'
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: '👋 Thanks <b>for</b> reporting <i>this</i>!'
             })
       # - name: Run Code Climate
       #   uses: erzz/codeclimate-standalone@v0.0.3
