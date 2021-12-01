@@ -27,22 +27,39 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: Report Code Climate
-        uses: actions/github-script@v5
-        if: always()
+      - name: Annotate Checks
+        uses: agyemanjp/ci-checks-action@2.1.1
         with:
-          github-token: ${{secrets.GITHUB_TOKEN}}
-          script: |
-            const fs = require('fs')
+          ghToken: ${{ secrets.GITHUB_TOKEN }}
+          checks: '[
+            {
+            "name": "lint",
+            "fileName": "lib/phx_actions/cover.ex",
+            "prChangesOnly": true
+            },
+            {
+            "name": "test",
+            "fileName": "lib/phx_actions/other_new.ex",
+            "prChangesOnly": false
+            }
+            ]'
 
-            let body = '<ul id="smells" class="filter-category-all filter-engine-all"><li data-categories="clarity" data-engine="credo"><h2>Modules should have a @moduledoc tag.</h2><div class="code" style="height: auto;"><pre class="line-numbers  language-elixir" data-line="1" data-start="1" data-line-offset="0" style="visibility: visible; counter-reset: linenumber 0;"><code class=" language-elixir"><span class="token keyword">defmodule</span> PhxActions<span class="token punctuation">.</span>Cover <span class="token keyword">do</span><span class="token keyword">def</span> fnc_not_tested<span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">do</span>sum <span class="token operator">=</span> <span class="token number">1</span> <span class="token operator">+</span> <span class="token number">1</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code><div aria-hidden="true" class=" line-highlight" style="top: 0px;"> </div></pre></div><details><summary>Details</summary><p>Modules should have a @moduledoc tag.</p></details><div class="found-in">Found in lib/phx_actions/cover.ex by<a href="https://docs.codeclimate.com/docs/credo">credo</a></div></li><li data-categories="style" data-engine="credo"><h2>There should be no calls to IO.inspect/1.</h2><div class="code" style="height: auto;"><pre class="line-numbers  language-elixir" data-line="7" data-start="5" data-line-offset="4" style="visibility: visible; counter-reset: linenumber 4;"><code class=" language-elixir"><span class="token keyword">def</span> new <span class="token keyword">do</span>IO<span class="token punctuation">.</span>inspect<span class="token punctuation">(</span><span class="token string">"NEW"</span><span class="token punctuation">)</span><span class="token keyword">end</span><span class="token keyword">end</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code><div aria-hidden="true" class=" line-highlight" style="top: 36px;"> </div></pre></div><details><summary>Details</summary><p>There should be no calls to IO.inspect/1.</p></details><div class="found-in">Found in lib/phx_actions/other_new.ex by<a href="https://docs.codeclimate.com/docs/credo">credo</a></div></li></ul>'
+      # - name: Report Code Climate
+      #   uses: actions/github-script@v5
+      #   if: always()
+      #   with:
+      #     github-token: ${{secrets.GITHUB_TOKEN}}
+      #     script: |
+      #       const fs = require('fs')
 
-            github.rest.issues.createComment({
-              issue_number: context.issue.number,
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              body: body
-            })
+      #       let body = '<ul id="smells" class="filter-category-all filter-engine-all"><li data-categories="clarity" data-engine="credo"><h2>Modules should have a @moduledoc tag.</h2><div class="code" style="height: auto;"><pre class="line-numbers  language-elixir" data-line="1" data-start="1" data-line-offset="0" style="visibility: visible; counter-reset: linenumber 0;"><code class=" language-elixir"><span class="token keyword">defmodule</span> PhxActions<span class="token punctuation">.</span>Cover <span class="token keyword">do</span><span class="token keyword">def</span> fnc_not_tested<span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">do</span>sum <span class="token operator">=</span> <span class="token number">1</span> <span class="token operator">+</span> <span class="token number">1</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code><div aria-hidden="true" class=" line-highlight" style="top: 0px;"> </div></pre></div><details><summary>Details</summary><p>Modules should have a @moduledoc tag.</p></details><div class="found-in">Found in lib/phx_actions/cover.ex by<a href="https://docs.codeclimate.com/docs/credo">credo</a></div></li><li data-categories="style" data-engine="credo"><h2>There should be no calls to IO.inspect/1.</h2><div class="code" style="height: auto;"><pre class="line-numbers  language-elixir" data-line="7" data-start="5" data-line-offset="4" style="visibility: visible; counter-reset: linenumber 4;"><code class=" language-elixir"><span class="token keyword">def</span> new <span class="token keyword">do</span>IO<span class="token punctuation">.</span>inspect<span class="token punctuation">(</span><span class="token string">"NEW"</span><span class="token punctuation">)</span><span class="token keyword">end</span><span class="token keyword">end</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code><div aria-hidden="true" class=" line-highlight" style="top: 36px;"> </div></pre></div><details><summary>Details</summary><p>There should be no calls to IO.inspect/1.</p></details><div class="found-in">Found in lib/phx_actions/other_new.ex by<a href="https://docs.codeclimate.com/docs/credo">credo</a></div></li></ul>'
+
+      #       github.rest.issues.createComment({
+      #         issue_number: context.issue.number,
+      #         owner: context.repo.owner,
+      #         repo: context.repo.repo,
+      #         body: body
+      #       })
 
       - name: Set up Elixir
         uses: erlef/setup-beam@988e02bfe678367a02564f65ca2e37726dc0268f
