@@ -34,10 +34,10 @@ jobs:
             github.request(`POST /repos/${github.repository}/pulls/${github.event.number}/comments`, {
               body: 'You <b>missed<b> this file to create a <i>test</i>'
             })
-      - name: Run Code Climate
-        uses: erzz/codeclimate-standalone@v0.0.3
-        with:
-          html_report: true
+      # - name: Run Code Climate
+      #   uses: erzz/codeclimate-standalone@v0.0.3
+      #   with:
+      #     html_report: true
       # - name: Pull request artifacts
       #   uses: gavv/pull-request-artifacts@v1.0.0
       #   if: always()
