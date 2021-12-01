@@ -31,7 +31,7 @@ jobs:
         with:
           github-token: ${{secrets.GITHUB_TOKEN}}
           script: |
-            github.request(`POST /repos/${github.repository}/pulls/17/comments`, {
+            github.request(`POST /repos/${process.env.GITHUB_REPOSITORY}/pulls/17/comments`, {
               body: 'You <b>missed<b> this file to create a <i>test</i>'
             })
       # - name: Run Code Climate
