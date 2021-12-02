@@ -38,6 +38,7 @@ jobs:
           path: deps
           key: ${{ runner.os }}-mix-${{ hashFiles('**/mix.lock') }}
           restore-keys: ${{ runner.os }}-mix-
+
       - name: Restore build cache
         uses: actions/cache@v2
         with:
@@ -55,11 +56,6 @@ jobs:
         with:
           lcov-file: ./cover/lcov.info
           github-token: ${{ secrets.GITHUB_TOKEN }}
-      - name: Upload deps result
-        uses: actions/upload-artifact@v2
-        with:
-          name: elixir-deps
-          path: deps
   nodejs:
     needs: elixir
     runs-on: ubuntu-latest
@@ -72,11 +68,27 @@ jobs:
         with:
           node-version: "14.16.1"
 
-      - name: Download deps result
-        uses: actions/download-artifact@v2
+      - name: Restore dependencies cache
+        uses: actions/cache@v2
         with:
-          name: elixir-deps
           path: deps
+          key: ${{ runner.os }}-mix-${{ hashFiles('**/mix.lock') }}
+          restore-keys: ${{ runner.os }}-mix-
+
+      - name: Restore build cache
+        uses: actions/cache@v2
+        with:
+          path: _build
+          key: ${{ runner.os }}-build-elixir
+          restore-keys: ${{ runner.os }}-build-elixir
+
+      - name: Cache NPM dependencies
+        uses: actions/cache@v2
+        with:
+          path: assets/node_modules
+          key: ${{ runner.OS }}-npm-cache-${{ hashFiles('**/assets/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.OS }}-npm-cache-
 
       - name: Build
         run: |
@@ -85,14 +97,6 @@ jobs:
       - name: Test
         run: npm test --prefix=assets
 
-      - name: Zip node modules
-        run: zip node_modules.zip ./assets/node_modules/* -r
-
-      - name: Upload build result
-        uses: actions/upload-artifact@v2
-        with:
-          name: node-modules
-          path: node_modules.zip
   code_quality:
     needs: nodejs
     runs-on: ubuntu-latest
@@ -101,20 +105,27 @@ jobs:
       - uses: actions/checkout@v2
       - uses: reviewdog/action-setup@v1
 
-      - name: Download deps result
-        uses: actions/download-artifact@v2
+      - name: Restore dependencies cache
+        uses: actions/cache@v2
         with:
-          name: elixir-deps
           path: deps
+          key: ${{ runner.os }}-mix-${{ hashFiles('**/mix.lock') }}
+          restore-keys: ${{ runner.os }}-mix-
 
-      - name: Download node modules result
-        uses: actions/download-artifact@v2
+      - name: Restore build cache
+        uses: actions/cache@v2
         with:
-          name: node-modules
-          path: node_modules.zip
+          path: _build
+          key: ${{ runner.os }}-build-elixir
+          restore-keys: ${{ runner.os }}-build-elixir
 
-      - name: unzip node modules
-        run: unzip node_modules.zip
+      - name: Cache NPM dependencies
+        uses: actions/cache@v2
+        with:
+          path: assets/node_modules
+          key: ${{ runner.OS }}-npm-cache-${{ hashFiles('**/assets/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.OS }}-npm-cache-
 
       - name: Run reviewdog
         env:
