@@ -11,4 +11,5 @@ runner:
 
   stylelint:
     cmd: npm run stylelint --prefix=assets --silent
-    format: rdjson
+    errorformat:
+      - "%f:%l:%c:%t%*[^:]: %m"
