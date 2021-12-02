@@ -7,5 +7,4 @@ runner:
 
   eslint:
     cmd: npm run eslint --prefix=assets
-    errorformat:
-      - rdjson
+    format: rdjson

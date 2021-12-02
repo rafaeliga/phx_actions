@@ -7,7 +7,7 @@
     "watch": "webpack --mode development --watch",
     "build": "webpack --mode development",
     "test": "jest assets/test --coverage",
-    "eslint": "eslint js -f=eslint-formatter-rdjson/index.js; exit 0"
+    "eslint": "eslint -f rdjson js; exit 0"
   },
   "dependencies": {
     "glob-parent": "^6.0.2",
