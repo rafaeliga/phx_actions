@@ -9,7 +9,7 @@ runner:
     cmd: npm run eslint --prefix=assets --silent
     format: rdjson
 
-  stylelint:
-    cmd: npm run stylelint --prefix=assets --silent
-    errorformat:
-      - "%f:%l:%c:%t%*[^:]: %m"
+  # stylelint:
+  #   cmd: npm run stylelint --prefix=assets --silent
+  #   errorformat:
+  #     - "%f:%l:%c:%t%*[^:]: %m"
