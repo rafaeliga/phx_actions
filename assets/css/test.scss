@@ -1,7 +1,11 @@
 .test {
-  boRdeR: 1px solid #000
+  border: 1px solid #0
 }
 
 .white-space-pre-wrap {
+  white-space: pre-wrap !important;
+}
+
+.white-space-pre-wrap2 {
   white-space: pre-wrap !important;
 }

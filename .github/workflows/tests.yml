@@ -150,4 +150,4 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           workdir: assets
           reporter: github-pr-review
-          stylelint_input: "**/*.css"
+          stylelint_input: "**/*.scss"
