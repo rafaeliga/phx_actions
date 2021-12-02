@@ -14,4 +14,4 @@ import "../css/app.css"
 //
 import "phoenix_html"
 
-var foo = bar;
+var other = bar;
