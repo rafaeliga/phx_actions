@@ -1,5 +1,11 @@
 defmodule PhxActions do
-  def test_action2 do
-    String.codepoints("2") |> IO.inspect()
+  @moduledoc false
+
+  def test_action do
+    "3" |> String.codepoints()
+  end
+
+  def test_action_other do
+    IO.inspect("OTHER")
   end
 end
