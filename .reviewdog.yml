@@ -6,6 +6,5 @@ runner:
       - "%f:%l: %t: %m"
 
   eslint:
-    cmd: npm run eslint --prefix=assets
-    errorformat:
-      - rdjson
+    cmd: npm run eslint --prefix=assets --silent
+    format: rdjson
