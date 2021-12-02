@@ -8,7 +8,7 @@
     "build": "webpack --mode development",
     "test": "jest assets/test --coverage",
     "eslint": "eslint -f rdjson js; exit 0",
-    "stylelint": "stylelint \"css/**/*.scss\"; exit 0"
+    "stylelint": "stylelint \"css/**/*.css\"; exit 0"
   },
   "dependencies": {
     "glob-parent": "^6.0.2",
