@@ -8,3 +8,9 @@ runner:
   eslint:
     cmd: npm run eslint --prefix=assets --silent
     format: rdjson
+
+  stylelint:
+    cmd: npm run stylelint --prefix=assets --silent
+    # format: eslint-compact
+    errorformat:
+      - "%f: line %l, col %c, %trror - %m"
