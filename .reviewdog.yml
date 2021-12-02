@@ -4,3 +4,8 @@ runner:
     errorformat:
       - "%f:%l:%c: %t: %m"
       - "%f:%l: %t: %m"
+
+  eslint:
+    cmd: npm run eslint --prefix=assets
+    errorformat:
+      - rdjson

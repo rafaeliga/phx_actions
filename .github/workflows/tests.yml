@@ -41,122 +41,71 @@ jobs:
       - name: Install dependencies
         run: mix deps.get
 
-      # - name: Check quality
-      #   run: |
-      #     mix credo suggest --strict --format=flycheck
+      - name: Run tests
+        run: |
+          mix test --cover
+      - name: Coverage
+        uses: romeovs/lcov-reporter-action@v0.2.16
+        with:
+          lcov-file: ./cover/lcov.info
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Upload deps result
+        uses: actions/upload-artifact@v2
+        with:
+          name: elixir-deps
+          path: deps
+  nodejs:
+    needs: elixir
+    runs-on: ubuntu-latest
 
-      # - name: credo
-      #   uses: red-shirts/reviewdog-action-credo@v1
-      #   with:
-      #     github_token: ${{ secrets.github_token }}
-      #     reporter: github-pr-review
+    steps:
+      - uses: actions/checkout@v2
 
+      - name: Set up node
+        uses: actions/setup-node@v2
+        with:
+          node-version: "14.16.1"
+
+      - name: Download deps result
+        uses: actions/download-artifact@v2
+        with:
+          name: elixir-deps
+          path: deps
+
+      - name: Build
+        run: |
+          npm install --prefix assets
+          npm run build --prefix assets
+      - name: Test
+        run: npm test --prefix=assets
+
+      - name: Upload build result
+        uses: actions/upload-artifact@v2
+        with:
+          name: nodejs-build
+          path: assets/node_modules
+  code_quality:
+    needs: nodejs
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
       - uses: reviewdog/action-setup@v1
+
+      - name: Download deps result
+        uses: actions/download-artifact@v2
+        with:
+          name: elixir-deps
+          path: deps
+
+      - name: Download node modules result
+        uses: actions/download-artifact@v2
+        with:
+          name: nodejs-build
+          path: assets/node_modules
+
       - name: Run reviewdog
         env:
           REVIEWDOG_GITHUB_API_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           reviewdog -diff="git diff FETCH_HEAD" -reporter=github-pr-review
-
-      # - name: Annotate Checks
-      #   uses: agyemanjp/ci-checks-action@2.1.1
-      #   with:
-      #     ghToken: ${{ secrets.GITHUB_TOKEN }}
-      #     checks: '[
-      #       {
-      #       "name": "lint",
-      #       "fileName": "lib/phx_actions/cover.ex",
-      #       "prChangesOnly": true
-      #       },
-      #       {
-      #       "name": "test",
-      #       "fileName": "lib/phx_actions/other_new.ex",
-      #       "prChangesOnly": false
-      #       }
-      #       ]'
-
-      # - name: Report Code Climate
-      #   uses: actions/github-script@v5
-      #   if: always()
-      #   with:
-      #     github-token: ${{secrets.GITHUB_TOKEN}}
-      #     script: |
-      #       const fs = require('fs')
-
-      #       let body = '<ul id="smells" class="filter-category-all filter-engine-all"><li data-categories="clarity" data-engine="credo"><h2>Modules should have a @moduledoc tag.</h2><div class="code" style="height: auto;"><pre class="line-numbers  language-elixir" data-line="1" data-start="1" data-line-offset="0" style="visibility: visible; counter-reset: linenumber 0;"><code class=" language-elixir"><span class="token keyword">defmodule</span> PhxActions<span class="token punctuation">.</span>Cover <span class="token keyword">do</span><span class="token keyword">def</span> fnc_not_tested<span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">do</span>sum <span class="token operator">=</span> <span class="token number">1</span> <span class="token operator">+</span> <span class="token number">1</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code><div aria-hidden="true" class=" line-highlight" style="top: 0px;"> </div></pre></div><details><summary>Details</summary><p>Modules should have a @moduledoc tag.</p></details><div class="found-in">Found in lib/phx_actions/cover.ex by<a href="https://docs.codeclimate.com/docs/credo">credo</a></div></li><li data-categories="style" data-engine="credo"><h2>There should be no calls to IO.inspect/1.</h2><div class="code" style="height: auto;"><pre class="line-numbers  language-elixir" data-line="7" data-start="5" data-line-offset="4" style="visibility: visible; counter-reset: linenumber 4;"><code class=" language-elixir"><span class="token keyword">def</span> new <span class="token keyword">do</span>IO<span class="token punctuation">.</span>inspect<span class="token punctuation">(</span><span class="token string">"NEW"</span><span class="token punctuation">)</span><span class="token keyword">end</span><span class="token keyword">end</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code><div aria-hidden="true" class=" line-highlight" style="top: 36px;"> </div></pre></div><details><summary>Details</summary><p>There should be no calls to IO.inspect/1.</p></details><div class="found-in">Found in lib/phx_actions/other_new.ex by<a href="https://docs.codeclimate.com/docs/credo">credo</a></div></li></ul>'
-
-      #       github.rest.issues.createComment({
-      #         issue_number: context.issue.number,
-      #         owner: context.repo.owner,
-      #         repo: context.repo.repo,
-      #         body: body
-      #       })
-
-      # - name: Check quality
-      #   run: |
-      #     mix credo --strict
-      # - name: Run tests
-      #   run: |
-      #     mix test --cover
-      # - name: Coverage
-      #   uses: romeovs/lcov-reporter-action@v0.2.16
-      #   with:
-      #     lcov-file: ./cover/lcov.info
-      #     github-token: ${{ secrets.GITHUB_TOKEN }}
-      # - name: Run Code Climate
-      #   uses: erzz/codeclimate-standalone@v0.0.3
-      #   with:
-      #     html_report: true
-      # - name: Report Code Climate
-      #   uses: actions/github-script@v5
-      #   if: always()
-      #   with:
-      #     github-token: ${{secrets.GITHUB_TOKEN}}
-      #     script: |
-      #       const fs = require('fs')
-
-      #       let body = fs.readFileSync('codeclimate-report.html', {encoding: 'utf8'})
-
-      #       github.rest.issues.createComment({
-      #         issue_number: context.issue.number,
-      #         owner: context.repo.owner,
-      #         repo: context.repo.repo,
-      #         body: body
-      #       })
-      # - name: Upload Reports
-      #   uses: actions/upload-artifact@v2
-      #   if: always()
-      #   with:
-      #     name: Code Climate Reports
-      #     path: |
-      #       codeclimate-report.json
-      #       codeclimate-report.html
-      # - name: Upload deps result
-      #   uses: actions/upload-artifact@v2
-      #   with:
-      #     name: elixir-deps
-      #     path: deps
-  # nodejs:
-  #   needs: elixir
-  #   runs-on: ubuntu-latest
-
-  #   steps:
-  #     - uses: actions/checkout@v2
-
-  #     - name: Set up node
-  #       uses: actions/setup-node@v2
-  #       with:
-  #         node-version: "14.16.1"
-
-  #     - name: Download deps result
-  #       uses: actions/download-artifact@v2
-  #       with:
-  #         name: elixir-deps
-  #         path: deps
-
-  #     - name: Build
-  #       run: |
-  #         npm install --prefix assets
-  #         npm run build --prefix assets
-  #     - name: Test
-  #       run: npm test --prefix=assets
