@@ -7,53 +7,59 @@ env:
   DATABASE_URL: postgres://postgres:postgres@localhost:5432/postgres
 
 jobs:
-  elixir:
-    runs-on: ubuntu-latest
+  # elixir:
+  #   runs-on: ubuntu-latest
 
-    services:
-      db:
-        env:
-          POSTGRES_USER: postgres
-          POSTGRES_PASSWORD: postgres
-          POSTGRES_DB: postgres
-        image: postgres:11
-        ports: ["5432:5432"]
-        options: >-
-          --health-cmd pg_isready
-          --health-interval 10s
-          --health-timeout 5s
-          --health-retries 5
+  #   services:
+  #     db:
+  #       env:
+  #         POSTGRES_USER: postgres
+  #         POSTGRES_PASSWORD: postgres
+  #         POSTGRES_DB: postgres
+  #       image: postgres:11
+  #       ports: ["5432:5432"]
+  #       options: >-
+  #         --health-cmd pg_isready
+  #         --health-interval 10s
+  #         --health-timeout 5s
+  #         --health-retries 5
 
-    steps:
-      - uses: actions/checkout@v2
+  #   steps:
+  #     - uses: actions/checkout@v2
 
-      - name: Set up Elixir
-        uses: erlef/setup-beam@988e02bfe678367a02564f65ca2e37726dc0268f
-        with:
-          elixir-version: "1.12.2"
-          otp-version: "23.3"
-      - name: Restore dependencies cache
-        uses: actions/cache@v2
-        with:
-          path: deps
-          key: ${{ runner.os }}-mix-${{ hashFiles('**/mix.lock') }}
-          restore-keys: ${{ runner.os }}-mix-
-      - name: Install dependencies
-        run: mix deps.get
+  #     - name: Set up Elixir
+  #       uses: erlef/setup-beam@988e02bfe678367a02564f65ca2e37726dc0268f
+  #       with:
+  #         elixir-version: "1.12.2"
+  #         otp-version: "23.3"
+  #     - name: Restore dependencies cache
+  #       uses: actions/cache@v2
+  #       with:
+  #         path: deps
+  #         key: ${{ runner.os }}-mix-${{ hashFiles('**/mix.lock') }}
+  #         restore-keys: ${{ runner.os }}-mix-
+  #     - name: Restore build cache
+  #       uses: actions/cache@v2
+  #       with:
+  #         path: _build
+  #         key: ${{ runner.os }}-build-elixir
+  #         restore-keys: ${{ runner.os }}-build-elixir
+  #     - name: Install dependencies
+  #       run: mix deps.get
 
-      - name: Run tests
-        run: |
-          mix test --cover
-      - name: Coverage
-        uses: romeovs/lcov-reporter-action@v0.2.16
-        with:
-          lcov-file: ./cover/lcov.info
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-      - name: Upload deps result
-        uses: actions/upload-artifact@v2
-        with:
-          name: elixir-deps
-          path: deps
+  #     - name: Run tests
+  #       run: |
+  #         mix test --cover
+  #     - name: Coverage
+  #       uses: romeovs/lcov-reporter-action@v0.2.16
+  #       with:
+  #         lcov-file: ./cover/lcov.info
+  #         github-token: ${{ secrets.GITHUB_TOKEN }}
+  #     - name: Upload deps result
+  #       uses: actions/upload-artifact@v2
+  #       with:
+  #         name: elixir-deps
+  #         path: deps
   nodejs:
     needs: elixir
     runs-on: ubuntu-latest
@@ -79,11 +85,14 @@ jobs:
       - name: Test
         run: npm test --prefix=assets
 
+      - name: Zip node modules
+        run: zip node_modules.zip ./assets/node_modules/* -r
+
       - name: Upload build result
         uses: actions/upload-artifact@v2
         with:
-          name: nodejs-build
-          path: assets/node_modules
+          name: node-modules
+          path: node_modules.zip
   code_quality:
     needs: nodejs
     runs-on: ubuntu-latest
@@ -101,8 +110,11 @@ jobs:
       - name: Download node modules result
         uses: actions/download-artifact@v2
         with:
-          name: nodejs-build
-          path: assets/node_modules
+          name: node-modules
+          path: node_modules.zip
+
+      - name: unzip node modules
+        run: unzip node_modules.zip
 
       - name: Run reviewdog
         env:
