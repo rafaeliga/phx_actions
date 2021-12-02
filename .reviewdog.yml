@@ -1,15 +1,14 @@
 runner:
-  credo:
-    cmd: mix credo suggest --strict --format=flycheck
-    errorformat:
-      - "%f:%l:%c: %t: %m"
-      - "%f:%l: %t: %m"
-
-  eslint:
-    cmd: npm run eslint --prefix=assets --silent
-    format: rdjson
-
-  # stylelint:
-  #   cmd: npm run stylelint --prefix=assets --silent
+  # credo:
+  #   cmd: mix credo suggest --strict --format=flycheck
   #   errorformat:
-  #     - "%f:%l:%c:%t%*[^:]: %m"
+  #     - "%f:%l:%c: %t: %m"
+  #     - "%f:%l: %t: %m"
+
+  # eslint:
+  #   cmd: npm run eslint --prefix=assets --silent
+  #   format: rdjson
+
+  stylelint:
+    cmd: npm run stylelint --prefix=assets --silent
+    format: stylelint
