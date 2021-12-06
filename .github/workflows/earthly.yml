@@ -22,11 +22,11 @@ jobs:
           git checkout -b "$branch" || true
       # - name: Docker Login
       #   run: docker login --username "$DOCKERHUB_USERNAME" --password "$DOCKERHUB_TOKEN"
-      - name: Set up Elixir
-        uses: erlef/setup-beam@988e02bfe678367a02564f65ca2e37726dc0268f
-        with:
-          elixir-version: "1.12.2"
-          otp-version: "23.3"
+      # - name: Set up Elixir
+      #   uses: erlef/setup-beam@988e02bfe678367a02564f65ca2e37726dc0268f
+      #   with:
+      #     elixir-version: "1.12.2"
+      #     otp-version: "23.3"
       - name: Download latest earthly
         run: "sudo /bin/sh -c 'wget https://github.com/earthly/earthly/releases/download/v0.6.2/earthly-linux-amd64 -O /usr/local/bin/earthly && chmod +x /usr/local/bin/earthly'"
       - name: Earthly version
@@ -34,7 +34,7 @@ jobs:
       # - name: Run build
       #   run: earthly --ci --push +build
       - name: Execute tests
-        run: earthly --build-arg ELIXIR=1.12.2 --build-arg OTP=23.3 --build-arg RUN_INSTALLER_TESTS=1 +test
+        run: earthly --build-arg ELIXIR=1.12.1 --build-arg OTP=24.0.2 --build-arg RUN_INSTALLER_TESTS=1 +test
   npm_test:
     name: npm
     runs-on: ubuntu-latest
