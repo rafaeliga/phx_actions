@@ -38,7 +38,6 @@ test-setup:
    COPY mix.exs .
    COPY mix.lock .
    COPY .formatter.exs .
-   COPY package.json .
    RUN mix local.rebar --force
    RUN mix local.hex --force
    RUN mix deps.get
