@@ -35,6 +35,11 @@ jobs:
       #   run: earthly --ci --push +build
       - name: Execute tests
         run: earthly -P --build-arg ELIXIR=1.12.1 --build-arg OTP=24.0.2 +test
+      - name: Coverage
+        uses: romeovs/lcov-reporter-action@v0.2.16
+        with:
+          lcov-file: ./cover/lcov.info
+          github-token: ${{ secrets.GITHUB_TOKEN }}
   npm_test:
     name: npm
     runs-on: ubuntu-latest

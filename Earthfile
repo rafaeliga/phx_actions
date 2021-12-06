@@ -27,7 +27,7 @@ test:
         RUN docker-compose up -d & \
             MIX_ENV=test mix deps.compile && \
             while ! pg_isready --host=localhost --port=5432 --quiet; do sleep 1; done; \
-            mix test --include database
+            mix test --include database --cover
     END
 
 npm:
