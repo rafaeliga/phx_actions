@@ -34,7 +34,7 @@ jobs:
       # - name: Run build
       #   run: earthly --ci --push +build
       - name: Execute tests
-        run: earthly --build-arg ELIXIR=1.12.1 --build-arg OTP=24.0.2 +test
+        run: earthly -P --build-arg ELIXIR=1.12.1 --build-arg OTP=24.0.2 +test
   npm_test:
     name: npm
     runs-on: ubuntu-latest
