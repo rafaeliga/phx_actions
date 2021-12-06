@@ -16,7 +16,6 @@ test:
 
     COPY /docker-compose.yml ./docker-compose.yml
 
-    RUN MIX_ENV=test mix deps.compile
     COPY --dir assets config lib priv test ./
 
     WITH DOCKER
