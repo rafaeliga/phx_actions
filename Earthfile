@@ -1,6 +1,5 @@
 all:
     BUILD +all-test
-    BUILD +all-integration-test
     BUILD +npm
 
 all-test:
@@ -10,7 +9,7 @@ all-test:
 test:
     FROM +test-setup
     RUN MIX_ENV=test mix deps.compile
-    COPY --dir assets config installer lib integration_test priv test ./
+    COPY --dir assets config installer lib priv test ./
 
     # Run unit tests
     RUN mix test
