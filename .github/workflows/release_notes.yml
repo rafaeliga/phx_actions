@@ -31,3 +31,8 @@ jobs:
               tag_name: "${{ github.ref }}",
               body: body
             });
+      - name: Create release branch
+        run: |
+          git checkout $CI_COMMIT_SHORT_SHA
+          git checkout -b release/$CI_COMMIT_TAG
+          git push -u origin release/$CI_COMMIT_TAG
