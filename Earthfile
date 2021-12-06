@@ -9,17 +9,10 @@ all-test:
 test:
     FROM +test-setup
     RUN MIX_ENV=test mix deps.compile
-    COPY --dir assets config installer lib priv test ./
+    COPY --dir assets config lib priv test ./
 
     # Run unit tests
     RUN mix test
-
-    IF [ "$RUN_INSTALLER_TESTS" = "1" ]
-        WORKDIR /src/installer
-        RUN mix test
-    ELSE
-        RUN echo "Skipping installer tests"
-    END
 
 npm:
     FROM node:12-alpine3.12
