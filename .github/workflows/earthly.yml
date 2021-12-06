@@ -1,9 +1,9 @@
-name: CI
+name: Earthly
 
 on: [pull_request]
 
 jobs:
-  build:
+  test-elixir:
     runs-on: ubuntu-latest
     env:
       # DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
@@ -37,10 +37,10 @@ jobs:
         run: earthly --build-arg ELIXIR=1.12.2 --build-arg OTP=23.3 --build-arg RUN_INSTALLER_TESTS=1 +test
   npm_test:
     name: npm
-      runs-on: ubuntu-latest
-      steps:
-        - uses: actions/checkout@v2
-        - name: Download released earth
-          run: "sudo /bin/sh -c 'wget https://github.com/earthly/earthly/releases/download/v0.4.1/earthly-linux-amd64 -O /usr/local/bin/earthly && chmod +x /usr/local/bin/earthly'"
-        - name: Execute tests
-          run: earthly --build-arg ELIXIR=1.12.1 --build-arg OTP=24.0.2 +npm
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Download released earth
+        run: "sudo /bin/sh -c 'wget https://github.com/earthly/earthly/releases/download/v0.4.1/earthly-linux-amd64 -O /usr/local/bin/earthly && chmod +x /usr/local/bin/earthly'"
+      - name: Execute tests
+        run: earthly --build-arg ELIXIR=1.12.1 --build-arg OTP=24.0.2 +npm
