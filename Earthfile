@@ -8,11 +8,27 @@ all-test:
 
 test:
     FROM +test-setup
+
+    RUN apk add --no-progress --update docker docker-compose
+
+    # Install tooling needed to check if the DBs are actually up when performing integration tests
+    RUN apk add postgresql-client
+
+    COPY /docker-compose.yml ./docker-compose.yml
+
     RUN MIX_ENV=test mix deps.compile
     COPY --dir assets config lib priv test ./
 
-    # Run unit tests
-    RUN mix test
+    WITH DOCKER
+        # Start docker compose
+        # In parallel start compiling tests
+        # Check for DB to be up x 3
+        # Run the database tests
+        RUN docker-compose up -d & \
+            MIX_ENV=test mix deps.compile && \
+            while ! pg_isready --host=localhost --port=5432 --quiet; do sleep 1; done; \
+            mix test --include database
+    END
 
 npm:
     FROM node:12-alpine3.12
