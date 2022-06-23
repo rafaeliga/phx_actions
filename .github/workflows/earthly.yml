@@ -1,0 +1,51 @@
+name: Earthly
+
+on: [pull_request]
+
+jobs:
+  test-elixir:
+    runs-on: ubuntu-latest
+    env:
+      # DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
+      # DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
+      FORCE_COLOR: 1
+    steps:
+      - uses: actions/checkout@v2
+      - name: Put back the git branch into git (Earthly uses it for tagging)
+        run: |
+          branch=""
+          if [ -n "$GITHUB_HEAD_REF" ]; then
+            branch="$GITHUB_HEAD_REF"
+          else
+            branch="${GITHUB_REF##*/}"
+          fi
+          git checkout -b "$branch" || true
+      # - name: Docker Login
+      #   run: docker login --username "$DOCKERHUB_USERNAME" --password "$DOCKERHUB_TOKEN"
+      # - name: Set up Elixir
+      #   uses: erlef/setup-beam@988e02bfe678367a02564f65ca2e37726dc0268f
+      #   with:
+      #     elixir-version: "1.12.2"
+      #     otp-version: "23.3"
+      - name: Download latest earthly
+        run: "sudo /bin/sh -c 'wget https://github.com/earthly/earthly/releases/download/v0.6.2/earthly-linux-amd64 -O /usr/local/bin/earthly && chmod +x /usr/local/bin/earthly'"
+      - name: Earthly version
+        run: earthly --version
+      # - name: Run build
+      #   run: earthly --ci --push +build
+      - name: Execute tests
+        run: earthly -P --build-arg ELIXIR=1.12.1 --build-arg OTP=24.0.2 +test
+      - name: Coverage
+        uses: romeovs/lcov-reporter-action@v0.2.16
+        with:
+          lcov-file: ./cover/lcov.info
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+  npm_test:
+    name: npm
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Download released earth
+        run: "sudo /bin/sh -c 'wget https://github.com/earthly/earthly/releases/download/v0.4.1/earthly-linux-amd64 -O /usr/local/bin/earthly && chmod +x /usr/local/bin/earthly'"
+      - name: Execute tests
+        run: earthly --build-arg ELIXIR=1.12.1 --build-arg OTP=24.0.2 +npm
